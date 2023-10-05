@@ -4,7 +4,7 @@
         <style>
             body {
                 font-family: Arial, sans-serif;
-                background-color: whitesmoke;
+                background: linear-gradient(200deg,yellow,lightgrey,lightpink);
                 color: grey;
                 margin: 0;
                 padding: 0;
@@ -99,11 +99,14 @@
                         
                         <center><button type="submit" id="submit" style="width: 140px;">Update</button></center>
                     </form>
-                    <form action="/" method="post">
-                   <button> <a href="/post-reviews">Review</a></button>
-                    </form>
+                    <!-- In your book list template -->
+              <!-- Add this inside the loop that displays books -->
+                      <a href="/post-reviews/?bookId=<%= i._id %>"><button>Reviews</button></a>
+
+                    
                    <center> <button style="width: 148px;"><a href="/delete-book/?id=<%=i._id%>">Delete Book</a></button></center>
                 </li>
+               
             <%}%>
         </ul>
     </center>

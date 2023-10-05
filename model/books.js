@@ -1,5 +1,12 @@
 const mongoose = require('mongoose');
 
+
+
+  const reviewSchema = new mongoose.Schema({
+    rating:{ type: Number, required: true, min:1, max:5},
+    Comment: String,
+  });
+
 const booksSchema = new mongoose.Schema({
     title:{
         type:String,
@@ -24,7 +31,10 @@ const booksSchema = new mongoose.Schema({
     image:{
         type:String,
         required:true
-    }
+    },
+    reviews: [reviewSchema],
+
+    
 });
 
 const BooksData = mongoose.model('BooksData',booksSchema);

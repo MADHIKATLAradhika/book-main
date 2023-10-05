@@ -47,16 +47,54 @@ exports.getPage = async(req,res)=>{
     }
 }
 
-exports.getReview = async(req,res)=>{
-    try{
-        res.render('comments',{
+// Add route to render the form for adding ratings and comments
 
-        })
+  
+  // Add route to handle the submission of ratings and comments
+  // In userController.js
+
+// ...
+
+// Route to render the page for posting reviews
+exports.getPostReviews = async (req, res) => {
+    try {
+        const bookId = req.query.bookId;
+        const book = await Books.findById(bookId).exec();
+        res.render('post-reviews', { book });
+    } catch (err) {
+        console.error('Error in rendering post-reviews page:', err);
+        res.redirect('/all-books');
     }
-    catch(err){
-        
+};
+
+// Route to handle the submission of reviews
+exports.postReviews = async (req, res) => {
+    try {
+        const { bookId, rating, comment } = req.body;
+
+        // Find the book by ID and update its reviews
+        const book = await Books.findById(bookId).exec();
+        if (!book) {
+            return res.status(404).send('Book not found');
+        }
+
+        const newReview = {
+            rating: Number(rating),
+            Comment: comment,
+        };
+
+        book.reviews.push(newReview);
+        await book.save();
+
+        // Redirect back to the book details page or any other desired page
+        res.redirect(`/get-book/${bookId}`);
+    } catch (err) {
+        console.error('Error in adding rating and comment:', err);
+        res.redirect('/all-books');
     }
-}
+};
+
+  
 exports.getLogin = async(req,res)=>{
     try{
         res.render('login',{
@@ -155,6 +193,44 @@ exports.createUser = async(req,res)=>{
         return res.redirect('back');
     }
 }
+
+
+
+// userController.js
+// Import your Books model
+
+// ...
+
+// Get a single book by its ID
+// userController.js
+
+// ...
+
+// Get a single book by its ID
+exports.getSingleBook = async (req, res) => {
+    try {
+        const bookId = req.params.bookId;
+
+        // Find the book by ID in your database
+        const book = await Books.findById(bookId).exec();
+
+        if (!book) {
+            // Handle the case where the book is not found
+            return res.status(404).send('Book not found');
+        }
+
+        // Filter and extract ratings and comments for the book
+        
+        const bookReviews = book.reviews;
+        // Render the 'single-book' view with the book details and reviews
+        res.render('single-book', { book, bookReviews });
+    } catch (err) {
+        console.error('Error in getting single book:', err);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+
 
 exports.getProfile = async (req, res) => {
     try {

@@ -5,6 +5,9 @@ const userController = require('../controller/userController');
 Router.get('/register',userController.getPage);
 Router.get('/',userController.getHome);
 
+Router.get('/post-reviews/:id', userController.getPostReviews); 
+Router.post('/post-reviews', userController.postReviews);    // Handles the submission of reviews
+
 Router.get('/login',userController.getLogin);
 Router.get('/profile',userController.getProfile);
 Router.post('/verify-login',userController.verifyLogin);
@@ -14,6 +17,7 @@ Router.get('/get-add-book',userController.getAddBook);
 Router.get('/profile/get-books',userController.getBooks);
 Router.get('/delete-book',userController.deleteBook);
 Router.get('/search-books',userController.getSearchBook);
+Router.get('/get-book/:bookId', userController.getSingleBook);
 
 //get all books for admin
 Router.get('/all-books',userController.getAllBooks);
@@ -42,7 +46,7 @@ Router.post('/logout', (req,res)=>{
 
 //admin login
 Router.post('/verify-admin-login',userController.verifyAdminLogin);
-Router.post('/post-reviews',userController.getReview);
+
 
 //get admin login page
 Router.get('/admin-login',userController.adminLogin);

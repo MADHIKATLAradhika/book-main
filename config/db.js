@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect('mongodb+srv://Radhika1:8ED3CT1VPuVVDOtH@cluster0.6bsjdtv.mongodb.net/book-keeping');
+mongoose.connect('mongodb+srv://Radhika:oabHSLGdhj2xKpRA@cluster0.6bsjdtv.mongodb.net/book-keeping');
 
 const db = mongoose.connection;
 
@@ -11,3 +11,4 @@ db.on('error',(error)=>{
 db.once('open',function(){
     console.log('Successfully connected to database');
 })
+//mongodb://localhost:27017
